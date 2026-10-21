@@ -55,7 +55,14 @@ return {
         vim.api.nvim_create_autocmd("BufWritePre", {
           buffer = ev.buf,
           callback = function()
-            vim.lsp.buf.format({ async = true })
+            local bo = vim.bo[ev.buf]
+            if bo.readonly or bo.buftype ~= "" then
+              return
+            end
+            if vim.b[ev.buf].disable_formatting then
+              return
+            end
+            vim.lsp.buf.format({ async = false })
           end,
         })
       end,

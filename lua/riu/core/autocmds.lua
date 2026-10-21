@@ -26,17 +26,48 @@ api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Trim trailing whitespace on save for most filetypes.
+-- Trim trailing whitespace on save for safe filetypes only.
 local function trim_trailing_whitespace()
   local save = vim.fn.winsaveview()
   vim.cmd([[keeppatterns %s/\s\+$//e]])
   vim.fn.winrestview(save)
 end
 
+local skip_trim_filetypes = {
+  "markdown",
+  "md",
+  "tex",
+  "latex",
+  "gitcommit",
+  "gitrebase",
+  "diff",
+  "mail",
+}
+
 api.nvim_create_autocmd("BufWritePre", {
   group = M.augroup,
   pattern = "*",
-  callback = trim_trailing_whitespace,
+  callback = function(args)
+    local bufnr = args.buf
+    local bo = vim.bo[bufnr]
+
+    -- Skip special buffers (terminals, help, quickfix, etc.)
+    if bo.buftype ~= "" then
+      return
+    end
+
+    -- Skip readonly buffers
+    if bo.readonly then
+      return
+    end
+
+    local ft = bo.filetype
+    if ft and vim.tbl_contains(skip_trim_filetypes, ft) then
+      return
+    end
+
+    trim_trailing_whitespace()
+  end,
 })
 
 return M
