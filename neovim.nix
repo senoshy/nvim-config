@@ -21,6 +21,8 @@
     [
       lualine-nvim
       base16-nvim
+      tokyodark-nvim
+      material-nvim
       indent-blankline-nvim
       auto-session
       which-key-nvim

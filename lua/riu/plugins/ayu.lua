@@ -28,10 +28,6 @@ local function setup_ayu(_, opts)
     current = themes[i] or themes[1]
     set_theme(current)
   end, { desc = "Cycle between ayu-dark, ayu, ayu-mirage and ayu-light" })
-
-  if not set_theme(current) then
-    current = themes[1]
-  end
 end
 
 return {

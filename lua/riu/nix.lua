@@ -151,9 +151,11 @@ local FORCED_EAGER = {
   ["riu.plugins.direnv"] = true,
   ["riu.plugins.snacks"] = true,
   ["riu.plugins.ayu"] = true,
+  ["riu.plugins.theme"] = true,
 }
 
 local plugins_modules = {
+  "riu.plugins.theme",
   "riu.plugins.ayu",
   "riu.plugins.auto-session",
   "riu.plugins.autopairs",
