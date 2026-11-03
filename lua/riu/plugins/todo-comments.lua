@@ -9,7 +9,7 @@ local function setup_todo_comments()
         alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
       },
       TODO = { icon = " ", color = "info", alt = { "Personal" } },
-      HACK = { icon = " ", color = "warning", alt = { "DON SKIP" } },
+      HACK = { icon = " ", color = "warning", alt = { "DONTSKIP" } },
       WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
       PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
       NOTE = { icon = " ", color = "hint", alt = { "INFO", "READ", "COLORS", "Custom" } },

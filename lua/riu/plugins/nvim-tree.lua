@@ -4,7 +4,7 @@ local function setup_nvim_tree()
     hijack_netrw = true,
     open_on_tab = false,
     hijack_cursor = true,
-    update_cwd = true,
+    sync_root_with_cwd = true,
     diagnostics = {
       enable = true,
       show_on_dirs = false,
@@ -12,7 +12,7 @@ local function setup_nvim_tree()
     },
     update_focused_file = {
       enable = true,
-      update_cwd = true,
+      update_root = true,
     },
     view = {
       width = 32,
