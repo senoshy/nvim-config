@@ -36,22 +36,6 @@ local function dispatch(rhs)
   end
 end
 
-local function register_keymap(spec, key)
-  local mode = key.mode or "n"
-  local lhs = key[1]
-  local rhs = key[2]
-  if lhs and rhs then
-    vim.keymap.set(mode, lhs, function()
-      dispatch(rhs)
-    end, {
-      desc = key.desc,
-      noremap = key.noremap ~= false,
-      silent = key.silent ~= false,
-      expr = key.expr or false,
-    })
-  end
-end
-
 local function load_plugin_config(spec)
   if loaded[spec] then return true end
   loaded[spec] = true
@@ -62,16 +46,8 @@ local function load_plugin_config(spec)
       vim.notify("Error in plugin config (" .. get_plugin_name(spec) .. "): " .. err, vim.log.levels.ERROR)
       return true
     end
-  elseif spec.config == true or (spec.opts and spec.config == nil) then
-    local ok, module = pcall(require, get_plugin_name(spec))
-    if ok and type(module.setup) == "function" then
-      module.setup(spec.opts or {})
-    end
   end
 
-  for _, key in ipairs(spec.keys or {}) do
-    register_keymap(spec, key)
-  end
   return true
 end
 

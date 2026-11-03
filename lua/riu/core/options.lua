@@ -45,7 +45,6 @@ opt.cursorcolumn = false
 opt.list = true
 opt.clipboard:append("unnamedplus")
 
-opt.laststatus = 2
 opt.showtabline = 2
 
 vim.g.editorconfig = true

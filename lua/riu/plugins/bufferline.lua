@@ -72,8 +72,6 @@ api.nvim_create_autocmd("TabEnter", {
   end,
 })
 
-vim.keymap.set("n", "<leader>bc", "<Cmd>bdelete!<CR>", { desc = "Fechar buffer" })
-
 return {
   "akinsho/bufferline.nvim",
   version = "*",
@@ -84,7 +82,6 @@ return {
     { "<S-l>", "<Cmd>BufferLineCycleNext<CR>", desc = "Buffer próximo" },
     { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Fixar buffer" },
     { "<leader>br", "<Cmd>BufferLineCloseOthers<CR>", desc = "Fechar outros buffers" },
-    { "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Fechar outros buffers" },
   },
   config = setup_bufferline,
 }
