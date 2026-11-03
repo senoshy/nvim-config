@@ -24,7 +24,10 @@ return {
   },
 
   config = function()
-    local telescope = require("telescope")
+    local ok, telescope = pcall(require, "telescope")
+    if not ok then
+      return
+    end
     local actions = require("telescope.actions")
 
     telescope.setup({
@@ -36,14 +39,14 @@ return {
             ["<C-j>"] = actions.move_selection_next,
           },
         },
-        extensions = {
-          themes = {
-            enable_previewer = true,
-            enable_live_preview = true,
-            persist = {
-              enabled = true,
-              path = vim.fn.stdpath("config") .. "/lua/colorscheme.lua",
-            },
+      },
+      extensions = {
+        themes = {
+          enable_previewer = true,
+          enable_live_preview = true,
+          persist = {
+            enabled = true,
+            path = vim.fn.stdpath("config") .. "/lua/colorscheme.lua",
           },
         },
       },
