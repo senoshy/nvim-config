@@ -81,6 +81,20 @@ local function sync_bufferline()
         yellow = c.main.yellow,
       }
     end)
+  elseif name and name:match("^ayu") then
+    ok, colors = pcall(function()
+      local c = require("ayu.colors")
+      assert(c.bg, "ayu colors not generated")
+      return {
+        bg = c.bg,
+        highlight = c.selection_bg,
+        fg = c.fg,
+        fg_muted = c.ui,
+        accent = c.accent,
+        red = c.error,
+        yellow = c.warning,
+      }
+    end)
   end
 
   if ok and colors then
