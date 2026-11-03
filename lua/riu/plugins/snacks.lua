@@ -39,8 +39,8 @@ local function setup_snacks()
     quickfile = { enabled = true, exclude = { "latex" } },
     picker = {
       enabled = true,
-      matchers = { frecency = true, cwd_bonus = false },
-      exclude = { ".git", "node_modules", "dist", "build" },
+      matcher = { frecency = true, cwd_bonus = false },
+      sources = { files = { exclude = { ".git", "node_modules", "dist", "build" } } },
       formatters = {
         file = { filename_first = true, filename_only = false, icon_width = 2 },
       },
