@@ -13,6 +13,14 @@ return {
     local cmp = require("cmp")
     local luasnip = require("luasnip")
 
+    local lsp_sources = {
+      { name = "nvim_lsp" },
+      { name = "nvim_lua" },
+    }
+    if pcall(require, "cmp_luasnip") then
+      table.insert(lsp_sources, 2, { name = "luasnip" })
+    end
+
     cmp.setup({
       snippet = {
         expand = function(args)
@@ -51,11 +59,7 @@ return {
           end
         end, { "i", "s" }),
       }),
-      sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-        { name = "nvim_lua" },
-      }, {
+      sources = cmp.config.sources(lsp_sources, {
         { name = "buffer" },
         { name = "path" },
       }),
@@ -86,7 +90,7 @@ return {
 
     cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
+      sources = { { name = "path" } },
     })
   end,
 }
