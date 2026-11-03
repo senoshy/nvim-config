@@ -1,21 +1,22 @@
 local function setup_treesitter()
-  local ok, ts = pcall(require, "nvim-treesitter.configs")
-  if ok then
-    ts.setup({
-      ensure_installed = {},
-      auto_install = true,
-      highlight = { enable = true },
-      indent = { enable = true },
-    })
-  end
-
   vim.treesitter.language.register("latex", "tex")
 
   vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("RiuTreesitter", { clear = true }),
+    callback = function(args)
+      pcall(vim.treesitter.start, args.buf)
+      if pcall(vim.treesitter.get_parser, args.buf) then
+        vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end
+    end,
+  })
+
+  vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("RiuTexConceal", { clear = true }),
     pattern = { "tex", "bib" },
     callback = function()
-      vim.opt.conceallevel = 1
-      vim.opt.concealcursor = "nc"
+      vim.opt_local.conceallevel = 1
+      vim.opt_local.concealcursor = "nc"
     end,
   })
 end
