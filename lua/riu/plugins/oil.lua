@@ -23,6 +23,7 @@ return {
     vim.keymap.set("n", "<leader>-", require("oil").toggle_float, { desc = "Toggle floating Oil" })
 
     vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("RiuOil", { clear = true }),
       pattern = "oil",
       callback = function()
         vim.opt_local.cursorline = true

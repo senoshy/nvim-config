@@ -5,7 +5,7 @@
 local api = vim.api
 local M = {}
 
-M.augroup = api.nvim_create_augroup("RiuCore", { clear = false })
+M.augroup = api.nvim_create_augroup("RiuCore", { clear = true })
 
 -- Reload a file's edits when it changes on disk and the buffer is unmodified.
 api.nvim_create_autocmd("FileChangedShellPost", {

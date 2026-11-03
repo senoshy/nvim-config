@@ -38,7 +38,7 @@ function M.add_current()
   end
 end
 
-local augroup = api.nvim_create_augroup("RiuPerTabBuffers", { clear = false })
+local augroup = api.nvim_create_augroup("RiuPerTabBuffers", { clear = true })
 
 api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TabEnter" }, {
   group = augroup,
