@@ -11,8 +11,9 @@ local function setup_navic()
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("RiuNavic", { clear = false }),
     callback = function(args)
-      if navic.is_available() then
-        navic.attach(args.buf, args.data.client_id)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if client then
+        navic.attach(client, args.buf)
       end
     end,
   })

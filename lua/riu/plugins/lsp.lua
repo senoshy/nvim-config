@@ -52,6 +52,11 @@ return {
         vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action,
           vim.tbl_extend("force", opts, { desc = "Code Action" }))
 
+        if vim.b[ev.buf].riu_lsp_format_hooked then
+          return
+        end
+        vim.b[ev.buf].riu_lsp_format_hooked = true
+
         vim.api.nvim_create_autocmd("BufWritePre", {
           buffer = ev.buf,
           callback = function()
@@ -60,6 +65,9 @@ return {
               return
             end
             if vim.b[ev.buf].disable_formatting then
+              return
+            end
+            if #vim.lsp.get_clients({ bufnr = ev.buf, method = "textDocument/formatting" }) == 0 then
               return
             end
             vim.lsp.buf.format({ async = false })
