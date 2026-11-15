@@ -24,6 +24,7 @@
       nvim-autopairs
       fzf-lua
       nvim-cmp
+      transparent-nvim
     ]
     ++
     [(pkgs.vimUtils.buildVimPlugin {
