@@ -1,6 +1,7 @@
 require("senoshy.core.keymaps")
 require("senoshy.core.options")
 require("senoshy.core.settings")
+require("senoshy.core.tokyonight")
 --require ("senoshy.core.tabs")
 --require ("senoshy.core.autocmds")
 --require ("senoshy.core.terminal")

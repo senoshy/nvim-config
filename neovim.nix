@@ -25,6 +25,7 @@
       fzf-lua
       nvim-cmp
       transparent-nvim
+      tokyonight-nvim
     ]
     ++
     [(pkgs.vimUtils.buildVimPlugin {
