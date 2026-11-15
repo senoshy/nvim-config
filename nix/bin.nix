@@ -1,0 +1,26 @@
+{
+  pkgs,
+  inputs,
+}:
+with pkgs; [
+  git
+  ripgrep
+  fd
+  bat
+  delta
+  jj-fzf
+  fzf
+  tree-sitter
+  lua-language-server
+  nil
+  inputs.alejandra.defaultPackage.${pkgs.stdenv.hostPlatform.system}
+  llvmPackages.clang-tools
+  ruff
+  ty
+  imagemagick
+  nodejs
+  texliveFull
+  texliveBookPub
+  latexrun
+  zathura
+]
