@@ -23,6 +23,7 @@
       oil-nvim 
       nvim-autopairs
       fzf-lua
+      nvim-cmp
     ]
     ++
     [(pkgs.vimUtils.buildVimPlugin {
