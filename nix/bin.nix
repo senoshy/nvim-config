@@ -10,6 +10,8 @@ with pkgs; [
   delta
   jj-fzf
   fzf
+  cmake
+  gnumake
   tree-sitter
   lua-language-server
   nil
