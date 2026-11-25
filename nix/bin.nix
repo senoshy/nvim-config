@@ -15,10 +15,24 @@ with pkgs; [
   tree-sitter
   lua-language-server
   nil
+  statix
+  deadnix
+  shellcheck
   inputs.alejandra.defaultPackage.${pkgs.stdenv.hostPlatform.system}
   llvmPackages.clang-tools
   ruff
   ty
+  rust-analyzer
+  rustfmt
+  texlab
+  bash-language-server
+  vscode-langservers-extracted
+  yaml-language-server
+  marksman
+  vscode-extensions.vadimcn.vscode-lldb.adapter
+  (writeShellScriptBin "debugpy-python" ''
+    exec ${python3.withPackages (ps: [ps.debugpy])}/bin/python3 "$@"
+  '')
   imagemagick
   nodejs
   texliveFull

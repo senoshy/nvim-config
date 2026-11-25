@@ -23,9 +23,30 @@
       oil-nvim 
       nvim-autopairs
       fzf-lua
-      nvim-cmp
+      blink-cmp
+      friendly-snippets
+      gitsigns-nvim
+      diffview-nvim
+      conform-nvim
+      nvim-lint
+      which-key-nvim
+      trouble-nvim
+      grug-far-nvim
+      nvim-dap
+      nvim-dap-ui
+      nvim-dap-virtual-text
+      nvim-dap-python
+      one-small-step-for-vimkind
+      neotest
+      neotest-python
+      neotest-rust
+      FixCursorHold-nvim
+      harpoon2
       transparent-nvim
       tokyonight-nvim
+      nvim-treesitter.withAllGrammars
+      nvim-treesitter-textobjects
+      nvim-treesitter-context
     ]
     ++
     [(pkgs.vimUtils.buildVimPlugin {
