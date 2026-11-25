@@ -10,7 +10,7 @@ local vmap = function(keys, func, desc)
     vim.keymap.set('v', keys, func, { desc = desc })
 end
 
-nmap('<C-S>', '<:wa<CR>', "Save all changed buffers")
+nmap('<C-S>', '<cmd>wa<CR>', "Save all changed buffers")
 
 -- Moving selected lines up and down
 vmap('J', ":m '>+1<CR>gv=gv")

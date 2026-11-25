@@ -31,20 +31,5 @@ opt.splitbelow = true
 opt.list = true
 opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
-vim.diagnostic.config {
-  virtual_text = false,
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = '●',
-      [vim.diagnostic.severity.WARN] = '●',
-      [vim.diagnostic.severity.HINT] = '●',
-      [vim.diagnostic.severity.INFO] = '',
-    },
-  },
-  -- Show the diagnostic message in a float after jumping with ]d / [d
-  jump = {
-    on_jump = function(_, bufnr)
-      vim.diagnostic.open_float { bufnr = bufnr, scope = 'cursor', focus = false }
-    end,
-  },
-}
+opt.foldlevel = 99
+opt.foldlevelstart = 99

@@ -45,13 +45,13 @@ local function configure(name, spec)
     local ok, err
     if type(spec.config) == "function" then
         ok, err = pcall(spec.config, spec, spec.opts or {})
-    elseif spec.opts ~= nil then
+    elseif spec.config == true or spec.opts ~= nil then
         local mod_name = main_module(name, spec)
         local loaded, mod = pcall(require, mod_name)
         if not loaded then
             ok, err = false, ("cannot require %q: %s"):format(mod_name, mod)
         elseif type(mod.setup) == "function" then
-            ok, err = pcall(mod.setup, spec.opts)
+            ok, err = pcall(mod.setup, spec.opts or {})
         end
     else
         return
