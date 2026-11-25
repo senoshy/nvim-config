@@ -25,9 +25,7 @@ vim.api.nvim_create_autocmd('OptionSet', {
   command = 'colorscheme tokyonight',
 })
 
--- With cmdheight=0 there's no "recording @q" message, so show it in the statusline
-vim.o.statusline = "%{reg_recording() != '' ? 'recording @' .. reg_recording() .. ' ' : ''}"
-    .. vim.api.nvim_get_option_info2('statusline', {}).default
+-- Redraw statusline when starting/stopping macro recording (useful with cmdheight=0)
 vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
   group = vim.api.nvim_create_augroup('user-recording-status', { clear = true }),
   callback = function()
@@ -72,15 +70,24 @@ vim.g.c_syntax_for_h = 1
 
 -- The configs live in `lua/senoshy/lsp/`, which is not the `lsp/` directory
 -- Neovim scans on the runtimepath, so register each one explicitly.
-for _, name in ipairs { 'clangd', 'lua_ls', 'ruff', 'ty' } do
+local lsp_servers = {
+  'bashls',
+  'clangd',
+  'jsonls',
+  'lua_ls',
+  'marksman',
+  'nil_ls',
+  'ruff',
+  'rust_analyzer',
+  'texlab',
+  'ty',
+  'yamlls',
+}
+for _, name in ipairs(lsp_servers) do
   vim.lsp.config(name, require('senoshy.lsp.' .. name))
 end
 
-vim.lsp.enable { 'clangd', 'lua_ls', 'ruff', 'ty' }
-
--- Highlight the first item in the completion menu, but don't insert it until accepted.
--- Navigate with <C-n>/<C-p>, accept with <C-y>, cancel with <C-e>
-vim.o.completeopt = 'menuone,noinsert,popup'
+vim.lsp.enable(lsp_servers)
 
 vim.diagnostic.config {
   virtual_text = false,
@@ -107,44 +114,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('user-lsp-attach', { clear = true }),
   callback = function(event)
     local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
-
-    -- Autocomplete. <C-Space> triggers it manually
-    if client:supports_method 'textDocument/completion' then
-      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
-      vim.keymap.set('i', '<C-Space>', vim.lsp.completion.get, { buffer = event.buf })
-
-      -- Autotrigger only fires on the server's trigger characters (e.g. `.` or `->`),
-      -- so also open the menu once a typed name is x characters long
-      local group = vim.api.nvim_create_augroup('user-lsp-complete-word',
-        { clear = false })
-      vim.api.nvim_clear_autocmds { group = group, buffer = event.buf }
-      vim.api.nvim_create_autocmd('InsertCharPre', {
-        group = group,
-        buffer = event.buf,
-        callback = function()
-          if vim.fn.pumvisible() == 1 then
-            return
-          end
-          -- InsertCharPre runs before the typed character is in the line
-          local col = vim.api.nvim_win_get_cursor(0)[2]
-          local text = vim.api.nvim_get_current_line():sub(1, col) .. vim.v.char
-          local word = text:match '[%a_][%w_]*$'
-          if word and #word >= 4 then
-            vim.schedule(vim.lsp.completion.get)
-          end
-        end,
-      })
+    local function map(lhs, rhs, desc)
+      vim.keymap.set('n', lhs, rhs, { buffer = event.buf, desc = desc })
     end
 
-    -- Format on save
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      group = vim.api.nvim_create_augroup('user-lsp-format', { clear = false }),
-      buffer = event.buf,
-      callback = function()
-        if client:supports_method('textDocument/formatting', event.buf) then
-          vim.lsp.buf.format { bufnr = event.buf, id = client.id, timeout_ms = 1000 }
-        end
-      end,
-    })
+    map('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+    map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
+    if client:supports_method('textDocument/inlayHint', event.buf) then
+      map('<leader>th', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }), { bufnr = event.buf })
+      end, '[T]oggle Inlay [H]ints')
+    end
   end,
 })

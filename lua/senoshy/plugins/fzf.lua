@@ -17,6 +17,8 @@ return {
     { "<leader>sc", function() require("fzf-lua").commands() end, desc = "[S]earch [C]ommands" },
     { "<leader>sd", function() require("fzf-lua").diagnostics_document() end, desc = "[S]earch [D]iagnostics" },
     { "<leader>sD", function() require("fzf-lua").diagnostics_workspace() end, desc = "[S]earch workspace [D]iagnostics" },
+    { "<leader>ds", function() require("fzf-lua").lsp_document_symbols() end, desc = "[D]ocument [S]ymbols" },
+    { "<leader>ws", function() require("fzf-lua").lsp_workspace_symbols() end, desc = "[W]orkspace [S]ymbols" },
     { "<leader>sm", function() require("fzf-lua").marks() end, desc = "[S]earch [M]arks" },
     { "<leader>s.", function() require("fzf-lua").oldfiles() end, desc = "[S]earch recent files" },
     { "<leader>sr", function() require("fzf-lua").resume() end, desc = "[S]earch [R]esume" },
